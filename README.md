@@ -1,4 +1,4 @@
-# SE-tech-mentoring
+# JSQLDB Engine
 SE-tech-mentoring
 
 Write in memory Database.

@@ -16,7 +16,6 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        
         /*String script = "CREATE TABLE 'USERS' (" +
             "id INT NOT NULL AUTO_INCREMENT," +
             "name TEXT" +

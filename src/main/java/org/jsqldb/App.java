@@ -40,13 +40,12 @@ public class App {
         {
             e.printStackTrace();
         }
-        
+
         List<Query> queries = new ArrayList<>();
         StringTokenizer tokens = new StringTokenizer(contentBuilder.toString(),";");
         while (tokens.hasMoreTokens()) 
         {
             String strQuery = tokens.nextToken();
-            System.out.println(strQuery); // parse use tokenizer pattern
             queries.add(new Query(strQuery));
         }
 

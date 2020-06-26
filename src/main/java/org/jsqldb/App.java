@@ -3,6 +3,12 @@ package org.jsqldb;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import org.jsqldb.query.CompositeQuery;
+import org.jsqldb.query.Query;
 
 public class App {
     public String getGreeting() {
@@ -10,24 +16,41 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(System.in));
-            String line;
-            while ((line = in.readLine()) != null) {
-                // class DB 
-                // class Query - composition pattern
-                System.out.println(line); // parse use tokenizer pattern
+        
+        /*String script = "CREATE TABLE 'USERS' (" +
+            "id INT NOT NULL AUTO_INCREMENT," +
+            "name TEXT" +
+        ");" +
+        
+        "INSERT INTO 'USERS' (name) VALUES ('Oleg', 'Ivan');" +
+        
+        "SELECT * FROM 'USERS';";*/
+
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) 
+        {
+ 
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) 
+            {
+                contentBuilder.append(sCurrentLine);
             }
-        } catch (IOException e) {
-            System.out.println("IOException reading System.in");
-            throw e;
-        } finally {
-            if (in != null) {
-                in.close();
-            }
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+        
+        List<Query> queries = new ArrayList<>();
+        StringTokenizer tokens = new StringTokenizer(contentBuilder.toString(),";");
+        while (tokens.hasMoreTokens()) 
+        {
+            String strQuery = tokens.nextToken();
+            System.out.println(strQuery); // parse use tokenizer pattern
+            queries.add(new Query(strQuery));
         }
 
-        System.out.println(new App().getGreeting());
+        CompositeQuery compositeQuery = new CompositeQuery(queries);
+        compositeQuery.executeJSQLDB();
     }
 }

@@ -36,3 +36,8 @@ tasks.named<Jar>("jar") {
         put("Main-Class", "org.jsqldb.App")
     }
 }
+
+tasks.test {
+    useJUnit()
+    maxHeapSize = "1G"
+}

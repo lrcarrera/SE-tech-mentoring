@@ -1,17 +1,7 @@
 package org.jsqldb.query;
 
-public class Query implements Script 
-{
-    String content;
-    String result;
+import org.jsqldb.meta.Table;
 
-    public String executeJSQLDB()
-    {
-        //TODO: implement query execution
-        return null;
-    }
-
-    public Query(String content) {
-        this.content = content;
-    }
+public interface Query {
+    Table execute();
 }

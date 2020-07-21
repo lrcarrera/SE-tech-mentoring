@@ -5,6 +5,9 @@ import java.util.Set;
 import org.jsqldb.meta.DataBase;
 import org.jsqldb.meta.Table;
 
+/**```sql
+SELECT * FROM '<table_name>' WHERE '<field_name>' = '<value>';
+``` */
 public class SelectQuery implements Query {
 
     private final DataBase db;
@@ -43,8 +46,12 @@ public class SelectQuery implements Query {
     }
 
     public SelectQuery setFrom(final Query subQuery) {
-        this.subQuery = subQuery;
-        return this;
+        if (subQuery != null)
+        {
+            this.subQuery = subQuery;
+            return this;
+        }
+        throw new IllegalArgumentException("subQuery parameter is not present");
     }
 
     public SelectQuery setCondition(final SQLCondition condition) { // AST - `Abstract syntax tree`

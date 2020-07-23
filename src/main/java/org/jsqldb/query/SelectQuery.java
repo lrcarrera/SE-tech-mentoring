@@ -2,6 +2,7 @@ package org.jsqldb.query;
 
 import java.util.Set;
 
+import org.jsqldb.condition.SQLCondition;
 import org.jsqldb.meta.DataBase;
 import org.jsqldb.meta.Table;
 
@@ -23,7 +24,7 @@ public class SelectQuery implements Query {
 
     @Override
     public Table execute() {
-        final Table result = db.getTable(this.table.getName());
+        final Table result = db.getTable(this.table.getName());//TODO: how is implemented the execute method?
         return result;
     }
 

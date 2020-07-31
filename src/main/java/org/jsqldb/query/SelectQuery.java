@@ -3,18 +3,20 @@ package org.jsqldb.query;
 import java.util.Set;
 
 import org.jsqldb.condition.SQLCondition;
+import org.jsqldb.from.FromSelectable;
+import org.jsqldb.from.SQLFrom;
+
 import org.jsqldb.meta.DataBase;
 import org.jsqldb.meta.Table;
 
 /**```sql
 SELECT * FROM '<table_name>' WHERE '<field_name>' = '<value>';
 ``` */
-public class SelectQuery implements Query {
+public class SelectQuery implements Query, FromSelectable{
 
     private final DataBase db;
     private Set<String> fields;
-    private Table table;
-    private Query subQuery;
+    private SQLFrom from;
     private SQLCondition condition;
 
     public SelectQuery(final DataBase db)
@@ -24,8 +26,8 @@ public class SelectQuery implements Query {
 
     @Override
     public Table execute() {
-        final Table result = db.getTable(this.table.getName());//TODO: how is implemented the execute method?
-        return result;
+        //final Table result = db.getTable(this.table.getName());//TODO: how is implemented the execute method?
+        return null;
     }
 
     public SelectQuery setWhat(final Set<String> fields) {
@@ -36,23 +38,13 @@ public class SelectQuery implements Query {
         throw new IllegalArgumentException("Must contain a valid string fields");
     }
 
-    public SelectQuery setFrom(final Table table) {
-        final Table existingTable = db.getTable(table.getName());
-        if (this.fields != null && existingTable != null)
+    public SelectQuery setFrom(final SQLFrom from) {
+        if (from != null)
         {
-            this.table = existingTable;
+            this.from = from;
             return this;
         }
         throw new IllegalArgumentException("No table has been found or select fields are not present");
-    }
-
-    public SelectQuery setFrom(final Query subQuery) {
-        if (subQuery != null)
-        {
-            this.subQuery = subQuery;
-            return this;
-        }
-        throw new IllegalArgumentException("subQuery parameter is not present");
     }
 
     public SelectQuery setCondition(final SQLCondition condition) { // AST - `Abstract syntax tree`
@@ -64,14 +56,9 @@ public class SelectQuery implements Query {
         return fields;
     }
 
-    public Table getFromTable() {
-        return table;
+    public SQLFrom getFromTable() {
+        return from;
     }
-
-    public Query getFromSubQuery() {
-        return subQuery;
-    }
-
     public SQLCondition getCondition() {
         return condition;
     }

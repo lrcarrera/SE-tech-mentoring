@@ -3,7 +3,9 @@ package org.jsqldb.meta;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Table {
+import org.jsqldb.from.FromSelectable;
+
+public class Table implements FromSelectable{
 
     private final String name;
     private final Map<PrimaryKey<?>, Row> table;
